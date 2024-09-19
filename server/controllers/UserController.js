@@ -14,6 +14,14 @@ const generateJwt = (id, email, role) => {
 };
 
 class UserController {
+    async getAllUsers(req, res, next) {
+        try {
+            const users = await User.findAll();
+            return res.json(users);
+        } catch (error) {
+            next(error);
+        }
+    }
     async registration(req, res, next) {
         const { email, password, fullname, role } = req.body;
         if (!email || !password || !fullname || !['participant', 'mentor'].includes(role)) {
